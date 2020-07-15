@@ -19,9 +19,15 @@ export default function Profie() {
 const styles = StyleSheet.create({
   Body: {
     marginTop: 25,
-    padding: 100,
+    padding: 20,
   },
   Header: {
     flexDirection: 'row',
+  },
+  img: {
+    marginTop: 50,
+    width: 50,
+    height: 50,
+    borderRadius: 100,
   },
 });

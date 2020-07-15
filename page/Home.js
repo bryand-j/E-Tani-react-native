@@ -1,9 +1,19 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {color} from '../utils';
 import {Card} from '../component';
 
-export default function home() {
+export default function home({navigation}) {
+  const clickHanddel = () => {
+    navigation.navigate('Profile');
+  };
   return (
     <View style={{backgroundColor: '#ecf0f1', height: '100%'}}>
       <View style={styles.header}>
@@ -11,7 +21,9 @@ export default function home() {
           <Text style={styles.Title}>Selamat Pagi,</Text>
           <Text style={styles.name}>Bryand J</Text>
         </View>
-        <Image source={require('../src/img/home.png')} style={styles.img} />
+        <TouchableOpacity onPress={clickHanddel}>
+          <Image source={require('../src/img/home.png')} style={styles.img} />
+        </TouchableOpacity>
       </View>
       <View style={styles.action}>
         <Text style={styles.text}>E - Reporting</Text>
@@ -32,7 +44,9 @@ export default function home() {
       </View>
 
       <View style={styles.scrollView}></View>
-      <ScrollView contentInsetAdjustmentBehavior="automatic">
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        showsVerticalScrollIndicator={false}>
         <View style={styles.body}>
           <Text style={styles.bodyTitle}>Penanaman Lahan</Text>
           <Card

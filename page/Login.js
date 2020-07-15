@@ -3,9 +3,9 @@ import {StyleSheet, Text, View} from 'react-native';
 import {color} from '../utils';
 import {Button, Input} from '../component/atoms';
 
-export default function Login() {
+export default function Login({navigation}) {
   const clickHanddel = () => {
-    alert('OK');
+    navigation.replace('Home');
   };
   return (
     <View style={styles.container}>
