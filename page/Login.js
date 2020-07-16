@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import {color} from '../utils';
 import {Button, Input} from '../component/atoms';
 
@@ -9,7 +9,7 @@ export default function Login({navigation}) {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.gambar}></View>
+      <Image style={styles.gambar} source={require('../src/img/traktor.png')} />
       <Text style={styles.title}>Login</Text>
       <Input label="Username" />
       <Input label="Password" />
@@ -26,12 +26,10 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   gambar: {
-    backgroundColor: color.utama,
     marginTop: 50,
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 120,
     marginBottom: 50,
-    borderRadius: 100,
   },
   title: {
     textAlign: 'center',
