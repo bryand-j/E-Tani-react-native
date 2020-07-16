@@ -3,10 +3,10 @@ import {StyleSheet, ScrollView, View} from 'react-native';
 import {TopBar} from '../component';
 import {Input, Button} from '../component/atoms';
 
-export default function KelTani() {
+export default function KelTani({navigation}) {
   return (
     <View style={styles.Body}>
-      <TopBar title="Kelompok Tani" />
+      <TopBar title="Kelompok Tani" kembali={() => navigation.goBack()} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}>

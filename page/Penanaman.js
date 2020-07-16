@@ -3,10 +3,10 @@ import {StyleSheet, ScrollView, View} from 'react-native';
 import {TopBar} from '../component';
 import {Input, Button} from '../component/atoms';
 
-export default function Penanaman() {
+export default function Penanaman({navigation}) {
   return (
     <View style={styles.Body}>
-      <TopBar title="Penanaman" />
+      <TopBar title="Penanaman Lahan" kembali={() => navigation.goBack()} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}>

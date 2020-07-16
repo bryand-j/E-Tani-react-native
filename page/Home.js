@@ -11,7 +11,7 @@ import {color} from '../utils';
 import {Card, IconBtn} from '../component';
 
 export default function home({navigation}) {
-  const clickHanddel = Page => {
+  const clickHanddel = (Page) => {
     navigation.navigate(Page);
   };
   return (

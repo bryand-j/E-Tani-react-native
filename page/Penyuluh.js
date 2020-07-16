@@ -3,10 +3,10 @@ import {StyleSheet, ScrollView, View} from 'react-native';
 import {TopBar} from '../component';
 import {Input, Button} from '../component/atoms';
 
-export default function Penyuluh() {
+export default function Penyuluh({navigation}) {
   return (
     <View style={styles.Body}>
-      <TopBar title="Penyuluh" />
+      <TopBar title="Penyuluh" kembali={() => navigation.goBack()} />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}>

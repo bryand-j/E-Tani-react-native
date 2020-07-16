@@ -11,13 +11,14 @@ import {color} from '../utils';
 import {List, TopBar} from '../component';
 import {Button} from '../component/atoms';
 
-export default function Profie() {
-  const clickHanddel = page => {
+export default function Profie({navigation}) {
+  const clickHanddel = (page) => {
     alert(page);
   };
+
   return (
     <View style={styles.Body}>
-      <TopBar title="Profile" />
+      <TopBar title="Profile" kembali={() => navigation.goBack()} />
       <View style={styles.header}>
         <View style={styles.headerText}>
           <Text style={styles.Nama}>Bonaventura P Jemi</Text>
