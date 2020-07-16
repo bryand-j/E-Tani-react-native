@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {color} from '../utils';
-import {Card} from '../component';
+import {Card, IconBtn} from '../component';
 
 export default function home({navigation}) {
-  const clickHanddel = () => {
-    navigation.navigate('Profile');
+  const clickHanddel = Page => {
+    navigation.navigate(Page);
   };
   return (
     <View style={{backgroundColor: '#ecf0f1', height: '100%'}}>
@@ -21,25 +21,30 @@ export default function home({navigation}) {
           <Text style={styles.Title}>Selamat Pagi,</Text>
           <Text style={styles.name}>Bryand J</Text>
         </View>
-        <TouchableOpacity onPress={clickHanddel}>
-          <Image source={require('../src/img/home.png')} style={styles.img} />
-        </TouchableOpacity>
+        <View style={styles.imgWraper}>
+          <TouchableOpacity onPress={() => clickHanddel('Profile')}>
+            <Image source={require('../src/img/user.jpg')} style={styles.img} />
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.action}>
         <Text style={styles.text}>E - Reporting</Text>
         <View style={styles.itemWrapper}>
-          <View style={styles.item}>
-            <Image source={require('../src/img/ic1.png')} style={styles.icon} />
-            <Text style={styles.label}>Penanaman</Text>
-          </View>
-          <View style={styles.item}>
-            <Image source={require('../src/img/ic2.png')} style={styles.icon} />
-            <Text style={styles.label}>Kel-Tani</Text>
-          </View>
-          <View style={styles.item}>
-            <Image source={require('../src/img/ic3.png')} style={styles.icon} />
-            <Text style={styles.label}>Penyuluh</Text>
-          </View>
+          <IconBtn
+            icon={require('../src/img/ic1.png')}
+            lable="Penanaman"
+            onPress={() => clickHanddel('Penanaman')}
+          />
+          <IconBtn
+            icon={require('../src/img/ic2.png')}
+            lable="Kel-Tani"
+            onPress={() => clickHanddel('KelTani')}
+          />
+          <IconBtn
+            icon={require('../src/img/ic3.png')}
+            lable="Penyuluh"
+            onPress={() => clickHanddel('Penyuluh')}
+          />
         </View>
       </View>
 
@@ -98,8 +103,19 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     paddingHorizontal: 4,
   },
-  img: {
+  imgWraper: {
+    padding: 10,
+
+    width: 65,
+    height: 65,
+    borderRadius: 40,
+    borderWidth: 3,
+    borderColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 50,
+  },
+  img: {
     width: 50,
     height: 50,
     borderRadius: 100,
@@ -138,27 +154,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 20,
   },
-  item: {
-    backgroundColor: color.icon,
-    marginHorizontal: 15,
-    width: 70,
-    height: 70,
-    borderRadius: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  label: {
-    position: 'absolute',
-    bottom: -20,
-    fontSize: 14,
-    textAlign: 'center',
-    width: 100,
-  },
 
-  icon: {
-    width: 40,
-    height: 40,
-  },
   body: {
     backgroundColor: color.bg,
     padding: 20,
