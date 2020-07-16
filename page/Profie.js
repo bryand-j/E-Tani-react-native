@@ -18,7 +18,6 @@ export default function Profie({navigation}) {
 
   return (
     <View style={styles.Body}>
-      <TopBar title="Profile" kembali={() => navigation.goBack()} />
       <View style={styles.header}>
         <View style={styles.headerText}>
           <Text style={styles.Nama}>Bonaventura P Jemi</Text>

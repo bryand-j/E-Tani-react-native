@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Home, Profile} from '../page';
 
 const MyTab = createBottomTabNavigator();
@@ -8,7 +9,7 @@ const MyTab = createBottomTabNavigator();
 export default function Tab() {
   return (
     <MyTab.Navigator
-      initialRouteName="Feed"
+      initialRouteName="Home"
       tabBarOptions={{
         activeTintColor: '#27ae60',
       }}>
@@ -17,6 +18,9 @@ export default function Tab() {
         component={Home}
         options={{
           tabBarLabel: 'Home',
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
         }}
       />
       <MyTab.Screen
@@ -24,6 +28,9 @@ export default function Tab() {
         component={Profile}
         options={{
           tabBarLabel: 'Profile',
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
         }}
       />
     </MyTab.Navigator>
