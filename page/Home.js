@@ -15,6 +15,7 @@ export default function home({route, navigation}) {
   const clickHanddel = (Page) => {
     navigation.navigate(Page);
   };
+
   return (
     <View style={{backgroundColor: '#ecf0f1', height: '100%'}}>
       <View style={styles.header}>

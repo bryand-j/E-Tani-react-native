@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,8 +11,38 @@ import {color} from '../utils';
 import {List, TopBar} from '../component';
 import {Button} from '../component/atoms';
 import {AsyncStorage} from 'react-native';
-
+import axios from 'axios';
 export default function Profie({navigation}) {
+  const [list, setList] = useState({
+    nama: '',
+    id: '',
+    golongan: '',
+    tempat_lahir: '',
+    tgl_lahir: '',
+    agama: '',
+    jenis_kelamin: '',
+  });
+
+  useEffect(() => {
+    axios
+      .get('http://192.168.137.1:80/rest-server/api/auth?id=1')
+      .then((res) => {
+        console.log(res.data.data[0]);
+        const user = res.data.data[0];
+        if (res.data.status == true) {
+          setList(user);
+        } else {
+          alert(res.data.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return () => {
+      console.log('ok');
+    };
+  }, [list]);
+
   const clickHanddel = (page) => {
     AsyncStorage.removeItem('userData');
     navigation.replace('Login');
@@ -33,13 +63,13 @@ export default function Profie({navigation}) {
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}>
         <View style={styles.main}>
-          <List lable="Nama" value="Bonaventura P Jemi" />
-          <List lable="ID Penyuluh" value="123456789" />
-          <List lable="Golongan" value="III B" />
-          <List lable="Tempat Lahir" value="Kupang" />
-          <List lable="Tanggal Lahir" value="16/10/1998" />
-          <List lable="Agama" value="Katolik" />
-          <List lable="Jenis Kelamin" value="Laki Laki" />
+          <List lable="Nama" value={list.nama} />
+          <List lable="ID Penyuluh" value={list.id} />
+          <List lable="Golongan" value={list.golongan} />
+          <List lable="Tempat Lahir" value={list.tempat_lahir} />
+          <List lable="Tanggal Lahir" value={list.tgl_lahir} />
+          <List lable="Agama" value={list.agama} />
+          <List lable="Jenis Kelamin" value={list.jenis_kelamin} />
           <View>
             <Button
               title="Ubah Data"
