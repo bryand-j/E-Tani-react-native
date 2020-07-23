@@ -17,9 +17,10 @@ export default function IconBtn({icon, lable, onPress}) {
 const styles = StyleSheet.create({
   item: {
     backgroundColor: color.icon,
-    marginHorizontal: 15,
-    width: 70,
-    height: 70,
+    marginHorizontal: 5,
+    width: 50,
+    height: 50,
+    marginBottom: 30,
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
@@ -27,13 +28,13 @@ const styles = StyleSheet.create({
   label: {
     position: 'absolute',
     bottom: -20,
-    fontSize: 14,
+    fontSize: 12,
     textAlign: 'center',
     width: 100,
   },
 
   icon: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
   },
 });

@@ -2,11 +2,11 @@ import React from 'react';
 import {StyleSheet, TextInput, Text, View} from 'react-native';
 import {color} from '../../utils';
 
-export default function Input({label}) {
+export default function Input({label, ...rest}) {
   return (
     <View style={styles.inputWrap}>
       <Text style={styles.label}>{label}</Text>
-      <TextInput style={styles.input} placeholder={label} />
+      <TextInput style={styles.input} placeholder={label} {...rest} />
     </View>
   );
 }

@@ -1,18 +1,43 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import {color} from '../utils';
 import {Button, Input} from '../component/atoms';
 
 export default function Login({navigation}) {
-  const clickHanddel = () => {
-    navigation.replace('Home');
+  const [form, setform] = useState({
+    userName: '',
+    password: '',
+  });
+
+  const onInputChange = (value, name) => {
+    setform({
+      ...form,
+      [name]: value,
+    });
   };
+  const clickHanddel = () => {
+    console.log(form);
+    navigation.navigate('Home', {
+      screen: 'Home',
+      params: {namaUser: form.userName},
+    });
+  };
+
   return (
     <View style={styles.container}>
       <Image style={styles.gambar} source={require('../src/img/traktor.png')} />
       <Text style={styles.title}>Login</Text>
-      <Input label="Username" />
-      <Input label="Password" />
+      <Input
+        label="Username"
+        value={form.userName}
+        onChangeText={(value) => onInputChange(value, 'userName')}
+      />
+      <Input
+        label="Password"
+        value={form.password}
+        onChangeText={(value) => onInputChange(value, 'password')}
+        secureTextEntry={true}
+      />
       <Button title="Login" onClick={clickHanddel} />
     </View>
   );

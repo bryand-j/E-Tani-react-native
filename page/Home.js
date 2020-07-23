@@ -10,7 +10,8 @@ import {
 import {color} from '../utils';
 import {Card, IconBtn} from '../component';
 
-export default function home({navigation}) {
+export default function home({route, navigation}) {
+  const {namaUser} = route.params;
   const clickHanddel = (Page) => {
     navigation.navigate(Page);
   };
@@ -19,7 +20,7 @@ export default function home({navigation}) {
       <View style={styles.header}>
         <View style={styles.TitleWrapper}>
           <Text style={styles.Title}>Selamat Pagi,</Text>
-          <Text style={styles.name}>Bryand J</Text>
+          <Text style={styles.name}>{namaUser}</Text>
         </View>
         <View style={styles.imgWraper}>
           <TouchableOpacity onPress={() => clickHanddel('Profile')}>
@@ -43,6 +44,11 @@ export default function home({navigation}) {
           <IconBtn
             icon={require('../src/img/ic3.png')}
             lable="Penyuluh"
+            onPress={() => clickHanddel('Penyuluh')}
+          />
+          <IconBtn
+            icon={require('../src/img/ic3.png')}
+            lable="Lahan"
             onPress={() => clickHanddel('Penyuluh')}
           />
         </View>
@@ -149,8 +155,8 @@ const styles = StyleSheet.create({
   itemWrapper: {
     flexDirection: 'row',
     flex: 1,
+    flexWrap: 'wrap',
     paddingHorizontal: 7,
-    alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 20,
   },
