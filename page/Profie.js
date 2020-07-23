@@ -10,10 +10,12 @@ import {
 import {color} from '../utils';
 import {List, TopBar} from '../component';
 import {Button} from '../component/atoms';
+import {AsyncStorage} from 'react-native';
 
 export default function Profie({navigation}) {
   const clickHanddel = (page) => {
-    alert(page);
+    AsyncStorage.removeItem('userData');
+    navigation.replace('Login');
   };
 
   return (
@@ -24,9 +26,7 @@ export default function Profie({navigation}) {
           <Text style={styles.welcome}>Selamat Datang Di E - Reporting</Text>
         </View>
         <View style={styles.imgWraper}>
-          <TouchableOpacity onPress={() => clickHanddel('GantiFoto')}>
-            <Image source={require('../src/img/user.jpg')} style={styles.img} />
-          </TouchableOpacity>
+          <Image source={require('../src/img/user.jpg')} style={styles.img} />
         </View>
       </View>
       <ScrollView
@@ -45,6 +45,8 @@ export default function Profie({navigation}) {
               title="Ubah Data"
               onClick={() => clickHanddel('UbahProfile')}
             />
+            <View style={{marginTop: 30}}></View>
+            <Button title="Log Out" onClick={() => clickHanddel('LogOut')} />
           </View>
         </View>
       </ScrollView>

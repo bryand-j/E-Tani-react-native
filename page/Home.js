@@ -47,7 +47,7 @@ export default function home({route, navigation}) {
             onPress={() => clickHanddel('Penyuluh')}
           />
           <IconBtn
-            icon={require('../src/img/ic3.png')}
+            icon={require('../src/img/lahan.png')}
             lable="Lahan"
             onPress={() => clickHanddel('Penyuluh')}
           />

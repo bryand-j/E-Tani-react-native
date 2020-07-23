@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 import {color} from '../utils';
 import {Button, Input} from '../component/atoms';
 import axios from 'axios';
+import {AsyncStorage} from 'react-native';
 
 export default function Login({navigation}) {
   const [form, setform] = useState({
@@ -10,19 +11,40 @@ export default function Login({navigation}) {
     password: '',
   });
 
+  // cek login
+  useEffect(() => {
+    AsyncStorage.getItem('userData', (error, result) => {
+      if (result) {
+        let isLogin = JSON.parse(result);
+        if (isLogin.status == true) {
+          navigation.replace('Home', {
+            screen: 'Home',
+            params: {namaUser: isLogin.userName},
+          });
+        }
+      }
+    });
+  }, []);
+
+  //ubah state
   const onInputChange = (value, name) => {
     setform({
       ...form,
       [name]: value,
     });
   };
+
+  //login klik
   const clickHanddel = () => {
     console.log(form);
+    // axios post data untuk cek login
     axios
       .post('http://192.168.137.1:80/rest-server/api/auth', form)
       .then((res) => {
         console.log(res.data);
+
         if (res.data.status == true) {
+          AsyncStorage.setItem('userData', JSON.stringify(res.data));
           navigation.replace('Home', {
             screen: 'Home',
             params: {namaUser: res.data.userName},
