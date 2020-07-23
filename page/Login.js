@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import {color} from '../utils';
 import {Button, Input} from '../component/atoms';
+import axios from 'axios';
 
 export default function Login({navigation}) {
   const [form, setform] = useState({
@@ -17,10 +18,22 @@ export default function Login({navigation}) {
   };
   const clickHanddel = () => {
     console.log(form);
-    navigation.navigate('Home', {
-      screen: 'Home',
-      params: {namaUser: form.userName},
-    });
+    axios
+      .post('http://192.168.137.1:80/rest-server/api/auth', form)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.status == true) {
+          navigation.replace('Home', {
+            screen: 'Home',
+            params: {namaUser: res.data.userName},
+          });
+        } else {
+          alert(res.data.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
