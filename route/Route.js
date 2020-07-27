@@ -1,9 +1,19 @@
 import React from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Home, Login, Profile, KelTani, Penanaman, Penyuluh} from '../page';
+import {
+  Home,
+  Login,
+  Profile,
+  KelTani,
+  Penanaman,
+  Penyuluh,
+  Splash,
+  Lahan,
+  EditProfil
+} from '../page';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 const Stack = createStackNavigator();
@@ -16,14 +26,14 @@ function Tab() {
       backBehavior="none"
       tabBarOptions={{
         activeTintColor: '#27ae60',
-        labelStyle: {fontSize: 13},
+        labelStyle: { fontSize: 13 },
       }}>
       <MyTab.Screen
         name="Home"
         component={Home}
         options={{
           tabBarLabel: 'HOME',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="home-variant-outline"
               color={color}
@@ -37,7 +47,7 @@ function Tab() {
         component={Profile}
         options={{
           tabBarLabel: 'PROFILE',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <Icon name="user" color={color} size={size} />
           ),
         }}
@@ -48,36 +58,51 @@ function Tab() {
 
 export default function Route() {
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName="Splash">
+      <Stack.Screen
+        name="Splash"
+        component={Splash}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Login"
         component={Login}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Home"
         component={Tab}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Profile"
         component={Profile}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Penanaman"
         component={Penanaman}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditProfil"
+        component={EditProfil}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="KelTani"
         component={KelTani}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Penyuluh"
         component={Penyuluh}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Lahan"
+        component={Lahan}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

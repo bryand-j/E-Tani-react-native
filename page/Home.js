@@ -7,17 +7,17 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {color} from '../utils';
-import {Card, IconBtn} from '../component';
+import { color } from '../utils';
+import { Card, IconBtn } from '../component';
 
-export default function home({route, navigation}) {
-  const {namaUser} = route.params;
+export default function home({ route, navigation }) {
+  const { namaUser } = route.params;
   const clickHanddel = (Page) => {
     navigation.navigate(Page);
   };
 
   return (
-    <View style={{backgroundColor: '#ecf0f1', height: '100%'}}>
+    <View style={{ backgroundColor: '#ecf0f1', height: '100%' }}>
       <View style={styles.header}>
         <View style={styles.TitleWrapper}>
           <Text style={styles.Title}>Selamat Pagi,</Text>
@@ -50,7 +50,7 @@ export default function home({route, navigation}) {
           <IconBtn
             icon={require('../src/img/lahan.png')}
             lable="Lahan"
-            onPress={() => clickHanddel('Penyuluh')}
+            onPress={() => clickHanddel('Lahan')}
           />
         </View>
       </View>

@@ -1,16 +1,24 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
-import {color} from '../utils';
-import {Button, Input} from '../component/atoms';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Image, ToastAndroid } from 'react-native';
+import { color } from '../utils';
+import { Button, Input } from '../component/atoms';
 import axios from 'axios';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import { Loading } from '../component';
 
-export default function Login({navigation}) {
+export default function Login({ navigation }) {
   const [form, setform] = useState({
     userName: '',
     password: '',
   });
-
+  const [modal, setModal] = useState({
+    visible: false
+  });
+  const setModalVisible = (value) => {
+    setModal({
+      ['visible']: value,
+    });
+  }
   // cek login
   useEffect(() => {
     AsyncStorage.getItem('userData', (error, result) => {
@@ -19,13 +27,12 @@ export default function Login({navigation}) {
         if (isLogin.status == true) {
           navigation.replace('Home', {
             screen: 'Home',
-            params: {namaUser: isLogin.userName},
+            params: { namaUser: isLogin.userName },
           });
         }
       }
     });
   }, []);
-
   //ubah state
   const onInputChange = (value, name) => {
     setform({
@@ -33,31 +40,32 @@ export default function Login({navigation}) {
       [name]: value,
     });
   };
-
   //login klik
   const clickHanddel = () => {
     console.log(form);
-    // axios post data untuk cek login
+    setModalVisible(true);
     axios
       .post('http://192.168.137.1:80/rest-server/api/auth', form)
       .then((res) => {
         console.log(res.data);
-
+        setModalVisible(false);
         if (res.data.status == true) {
+
+
           AsyncStorage.setItem('userData', JSON.stringify(res.data));
           navigation.replace('Home', {
             screen: 'Home',
-            params: {namaUser: res.data.userName},
+            params: { namaUser: res.data.userName },
           });
         } else {
-          alert(res.data.message);
+          ToastAndroid.show("" + res.data.message, ToastAndroid.SHORT);
         }
       })
       .catch((err) => {
-        console.log(err);
+        setModalVisible(false);
+        ToastAndroid.show("" + err, ToastAndroid.SHORT);
       });
   };
-
   return (
     <View style={styles.container}>
       <Image style={styles.gambar} source={require('../src/img/traktor.png')} />
@@ -74,6 +82,7 @@ export default function Login({navigation}) {
         secureTextEntry={true}
       />
       <Button title="Login" onClick={clickHanddel} />
+      <Loading visible={modal.visible} />
     </View>
   );
 }

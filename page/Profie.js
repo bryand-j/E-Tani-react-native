@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   Image,
-  TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {color} from '../utils';
-import {List, TopBar} from '../component';
-import {Button} from '../component/atoms';
-import {AsyncStorage} from 'react-native';
+import { color } from '../utils';
+import { List, TopBar } from '../component';
+import { Button } from '../component/atoms';
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
-export default function Profie({navigation}) {
+export default function Profie({ navigation }) {
+
   const [list, setList] = useState({
     nama: '',
     id: '',
@@ -24,28 +24,35 @@ export default function Profie({navigation}) {
   });
 
   useEffect(() => {
-    axios
-      .get('http://192.168.137.1:80/rest-server/api/auth?id=1')
-      .then((res) => {
-        console.log(res.data.data[0]);
-        const user = res.data.data[0];
-        if (res.data.status == true) {
-          setList(user);
-        } else {
-          alert(res.data.message);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    return () => {
-      console.log('ok');
-    };
-  }, [list]);
+    AsyncStorage.getItem('userData', (error, result) => {
+      if (result) {
+        let data = JSON.parse(result);
+        axios
+          .get(`http://192.168.137.1:80/rest-server/api/auth?id=` + data.userId)
+          .then((res) => {
+            console.log(res.data.data[0]);
+            const user = res.data.data[0];
+            if (res.data.status == true) {
+              setList(user);
+            } else {
+              alert(res.data.message);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
 
-  const clickHanddel = (page) => {
+
+  }, []);
+
+  const clickHanddelLogin = () => {
     AsyncStorage.removeItem('userData');
     navigation.replace('Login');
+  };
+  const clickHanddelEdit = () => {
+    navigation.navigate('EditProfil');
   };
 
   return (
@@ -73,10 +80,10 @@ export default function Profie({navigation}) {
           <View>
             <Button
               title="Ubah Data"
-              onClick={() => clickHanddel('UbahProfile')}
+              onClick={() => clickHanddelEdit('EditProfil')}
             />
-            <View style={{marginTop: 30}}></View>
-            <Button title="Log Out" onClick={() => clickHanddel('LogOut')} />
+            <View style={{ marginTop: 30 }}></View>
+            <Button title="Log Out" onClick={() => clickHanddelLogin('LogOut')} />
           </View>
         </View>
       </ScrollView>
