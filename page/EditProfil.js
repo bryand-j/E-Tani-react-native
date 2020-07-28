@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
-import { TopBar } from '../component';
+import { TopBar, Loading } from '../component';
 import { Input, Button } from '../component/atoms';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
@@ -16,6 +16,14 @@ export default function EditProfil({ navigation }) {
         agama: '',
         jenis_kelamin: '',
     });
+    const [modal, setModal] = useState({
+        visible: false
+    });
+    const setModalVisible = (value) => {
+        setModal({
+            ['visible']: value,
+        });
+    }
 
     useEffect(() => {
         AsyncStorage.getItem('userData', (error, result) => {
@@ -47,6 +55,25 @@ export default function EditProfil({ navigation }) {
             [name]: value,
         });
     };
+
+    const clickHanddelSimpan = () => {
+        setModalVisible(true);
+        axios
+            .post('http://192.168.137.1:80/rest-server/api/profile', Form)
+            .then((res) => {
+                console.log(res.data);
+                setModalVisible(false);
+                if (res.data.status == true) {
+                    ToastAndroid.show("" + res.data.message, ToastAndroid.SHORT);
+                } else {
+                    ToastAndroid.show("" + res.data.message, ToastAndroid.SHORT);
+                }
+            })
+            .catch((err) => {
+                setModalVisible(false);
+                ToastAndroid.show("" + err, ToastAndroid.SHORT);
+            });
+    };
     return (
         <View style={styles.Body}>
             <TopBar title="Edit Profil" kembali={() => navigation.goBack()} />
@@ -69,9 +96,10 @@ export default function EditProfil({ navigation }) {
                     <Input label="Jenis Kelamin"
                         value={Form.jenis_kelamin}
                         onChangeText={(value) => onInputChange(value, 'jenis_kelamin')} />
-                    <Button title="Simpan Data" />
+                    <Button title="Simpan Data" onClick={() => clickHanddelSimpan()} />
                 </View>
             </ScrollView>
+            <Loading visible={modal.visible} />
         </View>
     );
 }
