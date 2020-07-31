@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, ScrollView, View } from 'react-native';
+import { StyleSheet, ScrollView, View, ToastAndroid } from 'react-native';
 import { TopBar, Loading } from '../component';
 import { Input, Button } from '../component/atoms';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -65,6 +65,7 @@ export default function EditProfil({ navigation }) {
                 setModalVisible(false);
                 if (res.data.status == true) {
                     ToastAndroid.show("" + res.data.message, ToastAndroid.SHORT);
+                    navigation.goBack();
                 } else {
                     ToastAndroid.show("" + res.data.message, ToastAndroid.SHORT);
                 }

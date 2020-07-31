@@ -30,7 +30,6 @@ export default function Profie({ navigation }) {
         axios
           .get(`http://192.168.137.1:80/rest-server/api/auth?id=` + data.userId)
           .then((res) => {
-            console.log(res.data.data[0]);
             const user = res.data.data[0];
             if (res.data.status == true) {
               setList(user);
@@ -39,13 +38,13 @@ export default function Profie({ navigation }) {
             }
           })
           .catch((err) => {
-            console.log(err);
+            alert(err);
           });
       }
     });
 
 
-  }, []);
+  }, [list]);
 
   const clickHanddelLogin = () => {
     AsyncStorage.removeItem('userData');
@@ -59,7 +58,7 @@ export default function Profie({ navigation }) {
     <View style={styles.Body}>
       <View style={styles.header}>
         <View style={styles.headerText}>
-          <Text style={styles.Nama}>Bonaventura P Jemi</Text>
+          <Text style={styles.Nama}>{list.nama}</Text>
           <Text style={styles.welcome}>Selamat Datang Di E - Reporting</Text>
         </View>
         <View style={styles.imgWraper}>
