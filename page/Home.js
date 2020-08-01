@@ -6,15 +6,30 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
 import { color } from '../utils';
 import { Card, IconBtn } from '../component';
+
+const wait = (timeout) => {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
+}
 
 export default function home({ route, navigation }) {
   const { namaUser } = route.params;
   const clickHanddel = (Page) => {
     navigation.navigate(Page);
   };
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
   return (
     <View style={{ backgroundColor: '#ecf0f1', height: '100%' }}>
@@ -58,7 +73,9 @@ export default function home({ route, navigation }) {
       <View style={styles.scrollView}></View>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
-        showsVerticalScrollIndicator={false}>
+        showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      >
         <View style={styles.body}>
           <Text style={styles.bodyTitle}>Penanaman Lahan</Text>
           <Card

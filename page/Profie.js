@@ -42,9 +42,15 @@ export default function Profie({ navigation }) {
           });
       }
     });
+    return () => {
+      null
+    }
 
 
   }, [list]);
+
+
+
 
   const clickHanddelLogin = () => {
     AsyncStorage.removeItem('userData');
