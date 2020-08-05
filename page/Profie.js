@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { color } from '../utils';
-import { List, TopBar } from '../component';
+import { List, TopBar, Loading } from '../component';
 import { Button } from '../component/atoms';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
@@ -27,19 +27,7 @@ export default function Profie({ navigation }) {
     AsyncStorage.getItem('userData', (error, result) => {
       if (result) {
         let data = JSON.parse(result);
-        axios
-          .get(`http://192.168.137.1:80/rest-server/api/auth?id=` + data.userId)
-          .then((res) => {
-            const user = res.data.data[0];
-            if (res.data.status == true) {
-              setList(user);
-            } else {
-              alert(res.data.message);
-            }
-          })
-          .catch((err) => {
-            alert(err);
-          });
+        setList(data);
       }
     });
     return () => {
@@ -48,7 +36,6 @@ export default function Profie({ navigation }) {
 
 
   }, [list]);
-
 
 
 

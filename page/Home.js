@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import {
 import { color } from '../utils';
 import { Card, IconBtn } from '../component';
 import { FlatList } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const wait = (timeout) => {
   return new Promise(resolve => {
@@ -43,7 +44,10 @@ const DATA = [
 ];
 
 export default function home({ route, navigation }) {
-  const { namaUser } = route.params;
+
+  const [namaUser, setNama] = useState('Nama User');
+
+
   const clickHanddel = (Page) => {
     navigation.navigate(Page);
   };
@@ -64,6 +68,20 @@ export default function home({ route, navigation }) {
       Foto={item.foto}
     />
   );
+
+  useEffect(() => {
+    AsyncStorage.getItem('userData', (error, result) => {
+      if (result) {
+        let data = JSON.parse(result);
+        setNama(data.nama);
+      }
+    });
+    return () => {
+      null
+    }
+
+
+  }, [namaUser]);
   return (
     <View style={{ backgroundColor: '#ecf0f1', height: '100%' }}>
       <View style={styles.header}>
@@ -78,7 +96,7 @@ export default function home({ route, navigation }) {
         </View>
       </View>
       <View style={styles.action}>
-        <Text style={styles.text}>E - Reporting</Text>
+        <Text style={styles.text}>Menu</Text>
         <View style={styles.itemWrapper}>
           <IconBtn
             icon={require('../src/img/ic1.png')}
@@ -116,18 +134,6 @@ export default function home({ route, navigation }) {
             renderItem={ListItem}
             keyExtractor={item => item.id}>
           </FlatList>
-          {/* <Card
-            Nama="Montes"
-            Tanaman="Padi"
-            Tanggal="20/10/2020"
-            Foto={require('../src/img/proses.jpeg')}
-          />
-          <Card
-            Nama="Stef"
-            Tanaman="pepaya"
-            Tanggal="20/10/2020"
-            Foto={require('../src/img/pepaya.jpeg')}
-          /> */}
         </View>
       </ScrollView>
     </View>
@@ -202,9 +208,9 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   text: {
-    marginLeft: 20,
+    marginLeft: 10,
     marginBottom: 10,
-    fontSize: 20,
+    fontSize: 18,
     color: 'gray',
     fontWeight: 'bold',
   },

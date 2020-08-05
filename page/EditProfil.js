@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { StyleSheet, ScrollView, View, ToastAndroid } from 'react-native';
 import { TopBar, Loading } from '../component';
-import { Input, Button } from '../component/atoms';
+import { Input, Button, Select } from '../component/atoms';
+import { Picker } from '@react-native-community/picker';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 
@@ -29,20 +30,7 @@ export default function EditProfil({ navigation }) {
         AsyncStorage.getItem('userData', (error, result) => {
             if (result) {
                 let data = JSON.parse(result);
-                axios
-                    .get(`http://192.168.137.1:80/rest-server/api/auth?id=` + data.userId)
-                    .then((res) => {
-                        console.log(res.data.data[0]);
-                        const user = res.data.data[0];
-                        if (res.data.status == true) {
-                            setForm(user);
-                        } else {
-                            alert(res.data.message);
-                        }
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
+                setForm(data);
             }
         });
 
@@ -64,10 +52,12 @@ export default function EditProfil({ navigation }) {
                 console.log(res.data);
                 setModalVisible(false);
                 if (res.data.status == true) {
+                    AsyncStorage.setItem('userData', JSON.stringify(Form));
                     ToastAndroid.show("" + res.data.message, ToastAndroid.SHORT);
                     navigation.goBack();
                 } else {
                     ToastAndroid.show("" + res.data.message, ToastAndroid.SHORT);
+                    navigation.goBack();
                 }
             })
             .catch((err) => {
@@ -94,9 +84,13 @@ export default function EditProfil({ navigation }) {
                     <Input label="Agama"
                         value={Form.agama}
                         onChangeText={(value) => onInputChange(value, 'agama')} />
-                    <Input label="Jenis Kelamin"
-                        value={Form.jenis_kelamin}
-                        onChangeText={(value) => onInputChange(value, 'jenis_kelamin')} />
+                    <Select label="Jenis Kelamin" value={Form.jenis_kelamin}
+                        onValueChange={(value) => onInputChange(value, 'jenis_kelamin')}>
+                        <Picker.Item label="Pria" value="Pria" />
+                        <Picker.Item label="Wanita" value="Wanita" />
+                    </Select>
+
+
                     <Button title="Simpan Data" onClick={() => clickHanddelSimpan()} />
                 </View>
             </ScrollView>

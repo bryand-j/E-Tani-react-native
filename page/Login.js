@@ -50,12 +50,11 @@ export default function Login({ navigation }) {
         console.log(res.data);
         setModalVisible(false);
         if (res.data.status == true) {
-
-
-          AsyncStorage.setItem('userData', JSON.stringify(res.data));
+          const user = res.data.data[0];
+          AsyncStorage.setItem('userData', JSON.stringify(user));
           navigation.replace('Home', {
             screen: 'Home',
-            params: { namaUser: res.data.userName },
+            params: { namaUser: "bry" },
           });
         } else {
           ToastAndroid.show("" + res.data.message, ToastAndroid.SHORT);

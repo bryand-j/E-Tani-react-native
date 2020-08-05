@@ -9,7 +9,7 @@ export default function Splash({ navigation }) {
     AsyncStorage.getItem('userData', (error, result) => {
       if (result) {
         let isLogin = JSON.parse(result);
-        if (isLogin.status == true) {
+        if (isLogin.id != '') {
           navigation.replace('Home', {
             screen: 'Home',
             params: { namaUser: isLogin.userName },
@@ -37,6 +37,6 @@ const styles = StyleSheet.create({
   },
   gambar: {
     width: 150,
-    height: 130,
+    height: 120,
   },
 });

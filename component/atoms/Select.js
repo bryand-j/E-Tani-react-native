@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import { color } from '../../utils';
 
-export default function Select({ label, value, onValueChange }) {
+export default function Select({ label, value, onValueChange, children }) {
 
     return (
         <View style={styles.inputWrap}>
@@ -11,12 +11,10 @@ export default function Select({ label, value, onValueChange }) {
             <View style={styles.input}>
                 <Picker
                     prompt={label}
-                    mode="dialog"
+                    mode="dropdown"
                     selectedValue={value}
                     onValueChange={(itemValue) => onValueChange(itemValue)}>
-                    <Picker.Item label="Aktif" value="Aktif" />
-                    <Picker.Item label="Tidak Aktif" value="Tidak Aktif" />
-
+                    {children}
                 </Picker>
             </View>
         </View>

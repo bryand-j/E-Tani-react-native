@@ -4,6 +4,7 @@ import { TopBar, Loading } from '../component';
 import { Input, Button, Select } from '../component/atoms';
 
 import axios from 'axios';
+import { Picker } from '@react-native-community/picker';
 
 export default function KelTani({ navigation }) {
 
@@ -66,7 +67,10 @@ export default function KelTani({ navigation }) {
           <Input label="Jumlah Anggota" value={Form.jumlah}
             onChangeText={(value) => onInputChange(value, 'jumlah')} />
           <Select label="Status" value={Form.status}
-            onValueChange={(value) => onInputChange(value, 'status')} />
+            onValueChange={(value) => onInputChange(value, 'status')} >
+            <Picker.Item label="Aktif" value="Aktif" />
+            <Picker.Item label="Tidak Aktif" value="Tidak Aktif" />
+          </Select>
           <Button title="Simpan Data" onClick={() => clickHanddelSimpan()} />
         </View>
       </ScrollView>
