@@ -1,15 +1,24 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Picker from '@react-native-community/picker';
+import { Picker } from '@react-native-community/picker';
 import { color } from '../../utils';
 
-export default function Select({ label, selectedValue, onValueChange, items }) {
+export default function Select({ label, value, onValueChange }) {
+
     return (
         <View style={styles.inputWrap}>
             <Text style={styles.label}>{label}</Text>
-            <Picker style={styles.input} selectedValue={selectedValue} onValueChange={onValueChange}>
-                {items}
-            </Picker>
+            <View style={styles.input}>
+                <Picker
+                    prompt={label}
+                    mode="dialog"
+                    selectedValue={value}
+                    onValueChange={(itemValue) => onValueChange(itemValue)}>
+                    <Picker.Item label="Aktif" value="Aktif" />
+                    <Picker.Item label="Tidak Aktif" value="Tidak Aktif" />
+
+                </Picker>
+            </View>
         </View>
     )
 }
@@ -28,7 +37,7 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: color.bg,
         borderRadius: 10,
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         borderColor: color.utama,
     },
 })

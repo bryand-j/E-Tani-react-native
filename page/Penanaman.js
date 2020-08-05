@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, ToastAndroid } from 'react-native';
 import { TopBar, Loading } from '../component';
-import { Input, Button } from '../component/atoms';
+import { Input, Button, Select, InputDate } from '../component/atoms';
 import axios from 'axios';
 
 export default function Penanaman({ navigation }) {
   const [Form, setForm] = useState({
     lahann: '',
-    tgl_tanam: '',
-    perkiraan_panen: '',
+    tgl_tanam: new Date().toLocaleDateString(),
+    perkiraan_panen: new Date().toLocaleDateString(),
     jenis_tanaman: '',
     nama_tanaman: '',
     jumlah: '',
@@ -64,10 +64,13 @@ export default function Penanaman({ navigation }) {
         <View style={styles.main}>
           <Input label="Lahan" value={Form.lahann}
             onChangeText={(value) => onInputChange(value, 'lahann')} />
-          <Input label="Tanggal Tanam" value={Form.tgl_tanam}
-            onChangeText={(value) => onInputChange(value, 'tgl_tanam')} />
-          <Input label="Perkiraan Tanggal Panen" value={Form.perkiraan_panen}
-            onChangeText={(value) => onInputChange(value, 'perkiraan_panen')} />
+          <InputDate label="Tanggal Tanam"
+            value={Form.tgl_tanam}
+            setValue={(value) => onInputChange(value, 'tgl_tanam')} />
+          <InputDate label="Perkiraan Tanggal Panen"
+            value={Form.perkiraan_panen}
+            setValue={(value) => onInputChange(value, 'perkiraan_panen')} />
+
           <Input label="Jenis Tanaman" value={Form.jenis_tanaman}
             onChangeText={(value) => onInputChange(value, 'jenis_tanaman')} />
           <Input label="Nama Tanamaman" value={Form.nama_tanaman}

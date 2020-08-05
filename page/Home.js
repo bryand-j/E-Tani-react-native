@@ -10,12 +10,37 @@ import {
 } from 'react-native';
 import { color } from '../utils';
 import { Card, IconBtn } from '../component';
+import { FlatList } from 'react-native-gesture-handler';
 
 const wait = (timeout) => {
   return new Promise(resolve => {
     setTimeout(resolve, timeout);
   });
 }
+
+const DATA = [
+  {
+    id: '1',
+    nama: 'Montes',
+    tanaman: 'Padi',
+    tanggal: '17/11/2020',
+    foto: require('../src/img/proses.jpeg'),
+  },
+  {
+    id: '2',
+    nama: 'Filmon',
+    tanaman: 'pepaya',
+    tanggal: '17/11/2020',
+    foto: require('../src/img/pepaya.jpeg'),
+  },
+  {
+    id: '3',
+    nama: 'Montes',
+    tanaman: 'Padi',
+    tanggal: '17/11/2020',
+    foto: require('../src/img/proses.jpeg'),
+  },
+];
 
 export default function home({ route, navigation }) {
   const { namaUser } = route.params;
@@ -28,9 +53,17 @@ export default function home({ route, navigation }) {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
 
-    wait(2000).then(() => setRefreshing(false));
+    wait(1000).then(() => setRefreshing(false));
   }, []);
 
+  const ListItem = ({ item }) => (
+    <Card
+      Nama={item.nama}
+      Tanaman={item.tanaman}
+      Tanggal={item.tanggal}
+      Foto={item.foto}
+    />
+  );
   return (
     <View style={{ backgroundColor: '#ecf0f1', height: '100%' }}>
       <View style={styles.header}>
@@ -78,7 +111,12 @@ export default function home({ route, navigation }) {
       >
         <View style={styles.body}>
           <Text style={styles.bodyTitle}>Penanaman Lahan</Text>
-          <Card
+          <FlatList
+            data={DATA}
+            renderItem={ListItem}
+            keyExtractor={item => item.id}>
+          </FlatList>
+          {/* <Card
             Nama="Montes"
             Tanaman="Padi"
             Tanggal="20/10/2020"
@@ -89,7 +127,7 @@ export default function home({ route, navigation }) {
             Tanaman="pepaya"
             Tanggal="20/10/2020"
             Foto={require('../src/img/pepaya.jpeg')}
-          />
+          /> */}
         </View>
       </ScrollView>
     </View>

@@ -1,28 +1,36 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-
+import React, { useState } from 'react';
+import { StyleSheet, TouchableOpacity, View, Text, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { color } from '../../utils';
 
-export default function DatePicker({ label, value }) {
-    const [date, setDate] = useState(new Date(1598051730000));
+export default InputDate = ({ label, value, setValue }) => {
+    const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(false);
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
-        console.log(selectedDate);
-    };
+        const tanggal = currentDate.toLocaleDateString();
+        setValue(tanggal);
 
+
+    };
     const showDatepicker = () => {
         setShow(true);
     };
+
+
+
     return (
-        <View style={styles.inputWrap}>
-            <Text style={styles.label}>{label}</Text>
-            <TouchableOpacity style={styles.input} onPress={showDatepicker}>
-                {date}
-            </TouchableOpacity>
+
+        <View>
+            <View style={styles.inputWrap}>
+                <Text style={styles.label}>{label}</Text>
+                <TouchableOpacity style={styles.input} onPress={showDatepicker}>
+                    <Text>{value}</Text>
+                </TouchableOpacity>
+            </View>
             {show && (
                 <DateTimePicker
                     testID="datePicker"
@@ -30,11 +38,14 @@ export default function DatePicker({ label, value }) {
                     mode="date"
                     display="calendar"
                     onChange={onChange}
+                    textColor={color.utama}
+
                 />
             )}
         </View>
     );
-}
+};
+
 
 const styles = StyleSheet.create({
     inputWrap: {
@@ -50,7 +61,8 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: color.bg,
         borderRadius: 10,
-        paddingHorizontal: 20,
+        paddingVertical: 15,
+        paddingHorizontal: 15,
         borderColor: color.utama,
     },
 });

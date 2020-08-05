@@ -1,6 +1,6 @@
 import Button from './Button';
 import Input from './Input';
 import Select from './Select';
-import DatePicker from './DatePicker';
+import InputDate from './InputDate';
 
-export { Button, Input, Select, DatePicker };
+export { Button, Input, Select, InputDate };

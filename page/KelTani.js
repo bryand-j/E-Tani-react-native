@@ -10,9 +10,9 @@ export default function KelTani({ navigation }) {
   const [Form, setForm] = useState({
     nama: '',
     no_sk: '',
-    tgl_berdiri: '',
+    tgl_berdiri: new Date().toLocaleDateString(),
     jumlah: '',
-    status: '',
+    status: 'Aktif',
   });
   const [modal, setModal] = useState({
     visible: false
@@ -61,13 +61,12 @@ export default function KelTani({ navigation }) {
             onChangeText={(value) => onInputChange(value, 'nama')} />
           <Input label="Nomor SK" value={Form.no_sk}
             onChangeText={(value) => onInputChange(value, 'no_sk')} />
-          <Input label="Tanggal Berdiri" value={Form.tgl_berdiri}
-            onChangeText={(value) => onInputChange(value, 'tgl_berdiri')} />
+          <InputDate label="Tanggal Berdiri" value={Form.tgl_berdiri}
+            setValue={(value) => onInputChange(value, 'tgl_berdiri')} />
           <Input label="Jumlah Anggota" value={Form.jumlah}
             onChangeText={(value) => onInputChange(value, 'jumlah')} />
-
-          <Input label="Status" value={Form.status}
-            onChangeText={(value) => onInputChange(value, 'status')} />
+          <Select label="Status" value={Form.status}
+            onValueChange={(value) => onInputChange(value, 'status')} />
           <Button title="Simpan Data" onClick={() => clickHanddelSimpan()} />
         </View>
       </ScrollView>

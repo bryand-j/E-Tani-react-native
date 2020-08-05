@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, ToastAndroid } from 'react-native';
 import { TopBar, Loading } from '../component';
-import { Input, Button } from '../component/atoms';
+import { Input, Button, InputDate, Select } from '../component/atoms';
 
 import axios from 'axios';
 
@@ -27,6 +27,8 @@ export default function Lahan({ navigation }) {
             [name]: value,
         });
     };
+
+
 
     const clickHanddelSimpan = () => {
         setModalVisible(true);

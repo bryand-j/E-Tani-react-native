@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, ToastAndroid } from 'react-native';
 import { TopBar, Loading } from '../component';
-import { Input, Button } from '../component/atoms';
+import { Input, Button, Select, InputDate } from '../component/atoms';
 
 import axios from 'axios';
 
@@ -12,10 +12,10 @@ export default function Penyuluh({ navigation }) {
     keterangan: '',
     golongan: '',
     tempat_lahir: '',
-    tgl_lahir: '',
+    tgl_lahir: new Date().toLocaleDateString(),
     agama: '',
     jenis_kelamin: '',
-    status: '',
+    status: 'Aktif',
     alasan: '',
     lainya: '',
   });
@@ -69,9 +69,9 @@ export default function Penyuluh({ navigation }) {
           <Input label="Tempat Lahir"
             value={Form.tempat_lahir}
             onChangeText={(value) => onInputChange(value, 'tempat_lahir')} />
-          <Input label="Tanggal Lahir"
+          <InputDate label="Tanggal Lahir"
             value={Form.tgl_lahir}
-            onChangeText={(value) => onInputChange(value, 'tgl_lahir')} />
+            setValue={(value) => onInputChange(value, 'tgl_lahir')} />
           <Input label="Agama"
             value={Form.agama}
             onChangeText={(value) => onInputChange(value, 'agama')} />
@@ -80,8 +80,8 @@ export default function Penyuluh({ navigation }) {
             onChangeText={(value) => onInputChange(value, 'jenis_kelamin')} />
           <Input label="Keterangan" value={Form.keterangan}
             onChangeText={(value) => onInputChange(value, 'keterangan')} />
-          <Input label="Status" value={Form.status}
-            onChangeText={(value) => onInputChange(value, 'status')} />
+          <Select label="Status" value={Form.status}
+            onValueChange={(value) => onInputChange(value, 'status')} />
           <Input label="Alasan" value={Form.alasan}
             onChangeText={(value) => onInputChange(value, 'alasan')} />
           <Input label="Lainyna" value={Form.lainya}
