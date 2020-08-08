@@ -1,30 +1,30 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
-import {color} from '../utils';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { color } from '../utils';
 
-export default function Card({Nama, Tanggal, Foto, Tanaman}) {
+export default function Card({ Nama, Tanggal, Foto, Tanaman }) {
   return (
     <View style={styles.card}>
-      <Image source={Foto} style={styles.cardImage} />
+      <Image source={{ uri: Foto }} style={styles.cardImage} />
       <View style={styles.cardText}>
         <View style={styles.cardInfo}>
           <Image
             style={styles.cardIcon}
             source={require('../src/img/farmer.png')}
           />
-          <Text style={{fontSize: 18, flex: 1, color: 'black'}}>{Nama}</Text>
+          <Text style={{ fontSize: 18, flex: 1, color: 'black' }}>{Nama}</Text>
           <Image
-            style={{marginRight: 10, height: 18, width: 18}}
+            style={{ marginRight: 10, height: 18, width: 18 }}
             source={require('../src/img/date.png')}
           />
-          <Text style={{fontSize: 16, color: color.utama}}>{Tanggal}</Text>
+          <Text style={{ fontSize: 16, color: color.utama }}>{Tanggal}</Text>
         </View>
         <View style={styles.cardInfo}>
           {/* <Image
                   style={{marginRight: 10, height: 16, width: 16}}
                   source={require('../src/img/tanaman.png')}
                 /> */}
-          <Text style={{fontSize: 14, flex: 1, color: color.text}}>
+          <Text style={{ fontSize: 14, flex: 1, color: color.text }}>
             Tanaman: {Tanaman}
           </Text>
         </View>

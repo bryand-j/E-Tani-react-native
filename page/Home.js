@@ -7,11 +7,13 @@ import {
   ScrollView,
   TouchableOpacity,
   RefreshControl,
+  ToastAndroid
 } from 'react-native';
 import { color } from '../utils';
 import { Card, IconBtn } from '../component';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
+import Axios from 'axios';
 
 const wait = (timeout) => {
   return new Promise(resolve => {
@@ -19,69 +21,58 @@ const wait = (timeout) => {
   });
 }
 
-const DATA = [
-  {
-    id: '1',
-    nama: 'Montes',
-    tanaman: 'Padi',
-    tanggal: '17/11/2020',
-    foto: require('../src/img/proses.jpeg'),
-  },
-  {
-    id: '2',
-    nama: 'Filmon',
-    tanaman: 'pepaya',
-    tanggal: '17/11/2020',
-    foto: require('../src/img/pepaya.jpeg'),
-  },
-  {
-    id: '3',
-    nama: 'Montes',
-    tanaman: 'Padi',
-    tanggal: '17/11/2020',
-    foto: require('../src/img/proses.jpeg'),
-  },
-];
 
 export default function home({ route, navigation }) {
 
   const [namaUser, setNama] = useState('Nama User');
-
-
   const clickHanddel = (Page) => {
     navigation.navigate(Page);
   };
+  const [dtTanam, setDtTanam] = useState();
 
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-
-    wait(1000).then(() => setRefreshing(false));
-  }, []);
+    getData();
+  });
 
   const ListItem = ({ item }) => (
     <Card
-      Nama={item.nama}
-      Tanaman={item.tanaman}
-      Tanggal={item.tanggal}
-      Foto={item.foto}
+      Nama={item.nama_pemilik}
+      Tanaman={item.nama_tanaman}
+      Tanggal={item.tgl_tanam}
+      Foto={"http://192.168.137.1/rest-server/assets/img/" + item.foto}
     />
   );
 
+  const getData = () => {
+    Axios
+      .get('http://192.168.137.1:80/rest-server/api/penanaman')
+      .then((res) => {
+        setRefreshing(false);
+        if (res.data.status == true) {
+          const data = res.data.data;
+          setDtTanam(data);
+        } else {
+          ToastAndroid.show("" + res.data.message, ToastAndroid.SHORT);
+        }
+      })
+      .catch((err) => {
+        ToastAndroid.show("" + err, ToastAndroid.SHORT);
+        setRefreshing(false);
+      });
+  };
+
   useEffect(() => {
+    getData();
     AsyncStorage.getItem('userData', (error, result) => {
       if (result) {
         let data = JSON.parse(result);
         setNama(data.nama);
       }
     });
-    return () => {
-      null
-    }
-
-
-  }, [namaUser]);
+  });
   return (
     <View style={{ backgroundColor: '#ecf0f1', height: '100%' }}>
       <View style={styles.header}>
@@ -125,12 +116,11 @@ export default function home({ route, navigation }) {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-      >
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[color.utama]} />}>
         <View style={styles.body}>
           <Text style={styles.bodyTitle}>Penanaman Lahan</Text>
           <FlatList
-            data={DATA}
+            data={dtTanam}
             renderItem={ListItem}
             keyExtractor={item => item.id}>
           </FlatList>

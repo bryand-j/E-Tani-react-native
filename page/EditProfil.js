@@ -78,12 +78,17 @@ export default function EditProfil({ navigation }) {
                     <Input label="Tempat Lahir"
                         value={Form.tempat_lahir}
                         onChangeText={(value) => onInputChange(value, 'tempat_lahir')} />
-                    <Input label="Tanggal Lahir"
+                    <InputDate label="Tanggal Lahir"
                         value={Form.tgl_lahir}
-                        onChangeText={(value) => onInputChange(value, 'tgl_lahir')} />
-                    <Input label="Agama"
-                        value={Form.agama}
-                        onChangeText={(value) => onInputChange(value, 'agama')} />
+                        setValue={(value) => onInputChange(value, 'tgl_lahir')} />
+                    <Select label="Agama" value={Form.agama}
+                        onValueChange={(value) => onInputChange(value, 'agama')}>
+                        <Picker.Item label="Islam" value="Islam" />
+                        <Picker.Item label="Katolik" value="Katolik" />
+                        <Picker.Item label="Kristen" value="Kristen" />
+                        <Picker.Item label="Hindu" value="Hindu" />
+                        <Picker.Item label="Budha" value="Budha" />
+                    </Select>
                     <Select label="Jenis Kelamin" value={Form.jenis_kelamin}
                         onValueChange={(value) => onInputChange(value, 'jenis_kelamin')}>
                         <Picker.Item label="Pria" value="Pria" />
