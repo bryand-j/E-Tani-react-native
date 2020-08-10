@@ -4,7 +4,7 @@ import { color } from '../utils'
 
 export default function Loading({ visible }) {
     return (
-        <Modal visible={visible}>
+        <Modal visible={visible} transparent={true} animationType="fade">
             <View style={styles.body}>
                 <View style={styles.modal}>
                     <Text style={styles.text}>Loading...</Text>
