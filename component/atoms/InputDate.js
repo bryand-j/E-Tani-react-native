@@ -11,17 +11,14 @@ export default InputDate = ({ label, value, setValue }) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
-        const tanggal = currentDate.toLocaleDateString();
+        const bulan = currentDate.getUTCMonth() + 1;
+        const tanggal = currentDate.getFullYear() + '-' + bulan + '-' + currentDate.getDate();
         setValue(tanggal);
-
-
 
     };
     const showDatepicker = () => {
         setShow(true);
     };
-
-
 
     return (
 

@@ -7,7 +7,9 @@ import {
   ScrollView,
   TouchableOpacity,
   RefreshControl,
-  ToastAndroid
+  ToastAndroid,
+  VirtualizedList,
+  SafeAreaView
 } from 'react-native';
 import { color } from '../utils';
 import { Card, IconBtn } from '../component';
@@ -29,8 +31,9 @@ export default function home({ route, navigation }) {
     navigation.navigate(Page);
   };
   const [dtTanam, setDtTanam] = useState();
+  const [isData, setIsdata] = useState(false);
 
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -54,6 +57,7 @@ export default function home({ route, navigation }) {
         if (res.data.status == true) {
           const data = res.data.data;
           setDtTanam(data);
+          setIsdata(true);
         } else {
           ToastAndroid.show("" + res.data.message, ToastAndroid.SHORT);
         }
@@ -73,6 +77,18 @@ export default function home({ route, navigation }) {
       }
     });
   });
+
+  const EmptyData = () => {
+
+    return (
+      <View style={styles.kosong}>
+        <Image source={require('../src/img/empty.png')} style={styles.emptyImg} />
+        <Text style={styles.emptyText}>Oops..!</Text>
+        <Text style={styles.emptyText}>Data Kosong</Text>
+      </View>
+    );
+
+  }
   return (
     <View style={{ backgroundColor: '#ecf0f1', height: '100%' }}>
       <View style={styles.header}>
@@ -116,14 +132,19 @@ export default function home({ route, navigation }) {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[color.utama]} />}>
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[color.utama]} />}
+      >
         <View style={styles.body}>
           <Text style={styles.bodyTitle}>Penanaman Lahan</Text>
-          <FlatList
-            data={dtTanam}
-            renderItem={ListItem}
-            keyExtractor={item => item.id}>
-          </FlatList>
+          <SafeAreaView>
+            <FlatList
+
+              ListEmptyComponent={<EmptyData />}
+              data={dtTanam}
+              renderItem={ListItem}
+              keyExtractor={item => item.id}>
+            </FlatList>
+          </SafeAreaView>
         </View>
       </ScrollView>
     </View>
@@ -225,4 +246,16 @@ const styles = StyleSheet.create({
     color: 'gray',
     fontWeight: 'bold',
   },
+  kosong: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  emptyImg: {
+    width: 200,
+    height: 200
+  },
+  emptyText: {
+    fontSize: 20,
+    color: color.text
+  }
 });
