@@ -26,6 +26,7 @@ function Tab() {
       backBehavior="none"
       tabBarOptions={{
         activeTintColor: '#27ae60',
+
         labelStyle: { fontSize: 13 },
       }}>
       <MyTab.Screen

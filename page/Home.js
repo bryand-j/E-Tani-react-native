@@ -93,7 +93,7 @@ export default function home({ route, navigation }) {
     <View style={{ backgroundColor: '#ecf0f1', height: '100%' }}>
       <View style={styles.header}>
         <View style={styles.TitleWrapper}>
-          <Text style={styles.Title}>Selamat Pagi,</Text>
+          <Text style={styles.Title}>Hello,</Text>
           <Text style={styles.name}>{namaUser}</Text>
         </View>
         <View style={styles.imgWraper}>
@@ -168,17 +168,18 @@ const styles = StyleSheet.create({
   Title: {
     color: '#fff',
     marginTop: 20,
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: '600',
     paddingHorizontal: 4,
-    fontWeight: 'bold',
+
     paddingRight: 12,
     textAlign: 'left',
   },
   name: {
-    fontSize: 20,
+    fontSize: 25,
     color: '#fff',
     marginTop: 3,
+    fontWeight: 'bold',
     textAlign: 'left',
     paddingHorizontal: 4,
   },

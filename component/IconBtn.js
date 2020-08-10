@@ -1,16 +1,16 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {color} from '../utils';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { TouchableOpacity, TouchableNativeFeedback } from 'react-native-gesture-handler';
+import { color } from '../utils';
 
-export default function IconBtn({icon, lable, onPress}) {
+export default function IconBtn({ icon, lable, onPress }) {
   return (
-    <View style={styles.item}>
-      <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.item}>
         <Image source={icon} style={styles.icon} />
-      </TouchableOpacity>
-      <Text style={styles.label}>{lable}</Text>
-    </View>
+        <Text style={styles.label}>{lable}</Text>
+      </View>
+    </TouchableOpacity>
   );
 }
 

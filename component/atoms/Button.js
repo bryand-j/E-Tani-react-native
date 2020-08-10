@@ -1,14 +1,14 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TouchableNativeFeedback } from 'react-native'
 import { color } from '../../utils';
 
 export default function Button({ title, onClick }) {
   return (
-    <View>
-      <TouchableOpacity style={styles.Button} onPress={onClick}>
+    <TouchableNativeFeedback style={styles.Button} onPress={onClick}>
+      <View style={styles.Button}>
         <Text style={styles.text}>{title}</Text>
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableNativeFeedback>
   )
 }
 

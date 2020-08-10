@@ -4,7 +4,7 @@ import { color } from '../utils'
 
 export default function Loading({ visible }) {
     return (
-        <Modal visible={visible} transparent={true} animationType="fade">
+        <Modal visible={visible} transparent={true} animationType="fade" statusBarTranslucent={true}>
             <View style={styles.body}>
                 <View style={styles.modal}>
                     <Text style={styles.text}>Loading...</Text>
@@ -12,7 +12,6 @@ export default function Loading({ visible }) {
                 </View>
             </View>
         </Modal>
-
     )
 }
 
