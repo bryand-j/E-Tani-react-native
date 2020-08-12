@@ -17,7 +17,7 @@ export default function IconBtn({ icon, lable, onPress }) {
 const styles = StyleSheet.create({
   item: {
     backgroundColor: color.icon,
-    marginHorizontal: 5,
+    marginHorizontal: 10,
     width: 50,
     height: 50,
     marginBottom: 30,
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     bottom: -20,
     fontSize: 12,
     textAlign: 'center',
-    width: 100,
+    width: 300,
   },
 
   icon: {

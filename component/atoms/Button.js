@@ -3,16 +3,22 @@ import { StyleSheet, Text, View, TouchableOpacity, TouchableNativeFeedback } fro
 import { color } from '../../utils';
 
 export default function Button({ title, onClick }) {
+
   return (
-    <TouchableNativeFeedback style={styles.Button} onPress={onClick}>
-      <View style={styles.Button}>
-        <Text style={styles.text}>{title}</Text>
-      </View>
-    </TouchableNativeFeedback>
+    <View style={styles.tombol}>
+      <TouchableNativeFeedback onPress={onClick}>
+        <View style={styles.Button}>
+          <Text style={styles.text}>{title}</Text>
+        </View>
+      </TouchableNativeFeedback>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  tombol: {
+    marginVertical: 10
+  },
   Button: {
     backgroundColor: color.utama,
     borderRadius: 10,

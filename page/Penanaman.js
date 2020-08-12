@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, View, ToastAndroid } from 'react-native';
-import { TopBar, Loading } from '../component';
+import { StyleSheet, ScrollView, View, ToastAndroid, Image } from 'react-native';
+import { TopBar, Loading, IconBtn } from '../component';
 import { Input, Button, Select, InputDate } from '../component/atoms';
 import axios from 'axios';
+//import querystring from 'querystring'
+import ImagePicker from 'react-native-image-picker';
+import { color } from '../utils';
 
 export default function Penanaman({ navigation }) {
   const [Form, setForm] = useState({
     lahann: '',
+    kelompok_tani: '',
     tgl_tanam: new Date().toLocaleDateString(),
     perkiraan_panen: new Date().toLocaleDateString(),
     jenis_tanaman: '',
@@ -18,6 +22,12 @@ export default function Penanaman({ navigation }) {
     realisasi_kebutuhan: '',
     realisasi_panen: '',
     jumlah_panen: '',
+    foto: {
+      srcImg: '',
+      uri: '',
+      type: 'image/jpeg',
+      fileName: ''
+    },
   });
   const [modal, setModal] = useState({
     visible: false
@@ -36,10 +46,75 @@ export default function Penanaman({ navigation }) {
     });
   };
 
+  const choosePicture = () => {
+
+    let options = {
+      title: 'Pilih Gambar',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images'
+      }
+    };
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      }
+      else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      }
+      else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      }
+      else {
+        console.log(response.fileName);
+        setForm({
+          ...Form,
+          foto: {
+            srcImg: { uri: response.uri },
+            uri: response.uri,
+            type: 'image/jpeg',
+            fileName: response.fileName
+          },
+        });
+      }
+    });
+  };
+
   const clickHanddelSimpan = () => {
     setModalVisible(true);
-    axios
-      .post('http://192.168.137.1:80/rest-server/api/input/penanaman', Form)
+    const url = "http://192.168.137.1:80/rest-server/api/penanaman";
+    let data = new FormData();
+    data.append('lahan', Form.lahann);
+    data.append('kelompok_tani', Form.kelompok_tani);
+    data.append('tgl_tanam', Form.tgl_tanam);
+    data.append('perkiraan_panen', Form.perkiraan_panen);
+    data.append('jenis_tanaman', Form.jenis_tanaman);
+    data.append('nama_tanaman', Form.nama_tanaman);
+    data.append('jumlah', Form.jumlah);
+    data.append('status_penanaman', Form.status_penanaman);
+    data.append('kebutuhan', Form.kebutuhan);
+    data.append('estimasi_biaya', Form.estimasi_biaya);
+    data.append('realisasi_kebutuhan', Form.realisasi_kebutuhan);
+    data.append('realisasi_panen', Form.realisasi_panen);
+    data.append('jumlah_panen', Form.jumlah_panen);
+    data.append('foto',
+      {
+
+        uri: Form.foto.uri,
+        type: 'image/jpeg',
+        name: Form.foto.fileName,
+
+      });
+    console.log(data);
+    axios({
+      url: url,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      data: data,
+    })
       .then((res) => {
         console.log(res.data);
         setModalVisible(false);
@@ -64,6 +139,8 @@ export default function Penanaman({ navigation }) {
         <View style={styles.main}>
           <Input label="Lahan" value={Form.lahann}
             onChangeText={(value) => onInputChange(value, 'lahann')} />
+          <Input label="Kelompok Tani" value={Form.kelompok_tani}
+            onChangeText={(value) => onInputChange(value, 'kelompok_tani')} />
           <InputDate label="Tanggal Tanam"
             value={Form.tgl_tanam}
             setValue={(value) => onInputChange(value, 'tgl_tanam')} />
@@ -88,7 +165,22 @@ export default function Penanaman({ navigation }) {
           <Input label="Ralisasi Panen" value={Form.realisasi_panen}
             onChangeText={(value) => onInputChange(value, 'realisasi_panen')} />
           <Input label="Jumlah Panen" value={Form.jumlah_panen}
-            onChangeText={(value) => onInputChange(value, 'jumlah_panen ')} />
+            onChangeText={(value) => onInputChange(value, 'jumlah_panen')} />
+          <View style={styles.upload}>
+            {(Form.foto.srcImg != '') && (
+              <View>
+                <Image source={Form.foto.srcImg} style={{ height: 100, width: "100%", borderRadius: 10 }} />
+              </View>
+
+            )}
+            <View style={styles.btnUpload}>
+              <IconBtn
+                icon={require('../src/img/upload.png')}
+                onPress={() => choosePicture()}
+              />
+            </View>
+
+          </View>
           <Button title="Simpan Data" onClick={() => clickHanddelSimpan()} />
         </View>
       </ScrollView>
@@ -105,4 +197,19 @@ const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 60,
   },
+  upload: {
+    borderRadius: 10,
+    borderStyle: "dashed",
+    borderWidth: 2,
+    padding: 6,
+    borderColor: color.text,
+    height: 114,
+    width: "100%"
+  },
+  btnUpload: {
+    position: "absolute",
+    left: '43%',
+    top: 25
+
+  }
 });
