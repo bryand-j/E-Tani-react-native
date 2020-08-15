@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View, ToastAndroid, Image } from 'react-native';
 import { TopBar, Loading, IconBtn } from '../component';
 import { Input, Button, Select, InputDate, SelectTwo } from '../component/atoms';
@@ -8,11 +8,15 @@ import ImagePicker from 'react-native-image-picker';
 import { color } from '../utils';
 
 export default function Penanaman({ navigation }) {
+  useEffect(() => {
+    getApi('lahan', (data) => setDtLahan(data));
+    getApi('poktan', (data) => setDtPoktan(data));
+  }, [])
   const [Form, setForm] = useState({
     lahann: '',
     kelompok_tani: '',
-    tgl_tanam: new Date().toLocaleDateString(),
-    perkiraan_panen: new Date().toLocaleDateString(),
+    tgl_tanam: '2020-8-10',
+    perkiraan_panen: '2020-8-10',
     jenis_tanaman: '',
     nama_tanaman: '',
     jumlah: '',
@@ -29,11 +33,24 @@ export default function Penanaman({ navigation }) {
       fileName: ''
     },
   });
-  const mockData = [
-    { id: 1, name: "React Native Developer", checked: true }, // set default checked for render option item
-    { id: 2, name: "Android Developer" },
-    { id: 3, name: "iOS Developer" }
-  ]
+
+  const [dtLahan, setDtLahan] = useState([]);
+  const [dtPoktan, setDtPoktan] = useState([]);
+
+  const getApi = (api, setData) => {
+    axios.get('http://192.168.137.1:80/rest-server/api/' + api)
+      .then((res) => {
+        if (res.data.status == true) {
+          const data = res.data.data;
+          setData(data);
+        } else {
+          ToastAndroid.show("" + res.data.message, ToastAndroid.SHORT);
+        }
+      })
+      .catch((err) => {
+        ToastAndroid.show("" + err, ToastAndroid.SHORT);
+      });
+  }
   const [modal, setModal] = useState({
     visible: false
   });
@@ -48,6 +65,7 @@ export default function Penanaman({ navigation }) {
     setForm({
       ...Form,
       [name]: value,
+
     });
   };
 
@@ -55,10 +73,14 @@ export default function Penanaman({ navigation }) {
 
     let options = {
       title: 'Pilih Gambar',
+      chooseFromLibraryButtonTitle: 'Galeri Foto',
+      takePhotoButtonTitle: 'Kamera',
+      cancelButtonTitle: 'Batal',
       storageOptions: {
         skipBackup: true,
         path: 'images'
       }
+
     };
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
@@ -142,11 +164,8 @@ export default function Penanaman({ navigation }) {
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}>
         <View style={styles.main}>
-          <SelectTwo name="Lahan" data={mockData} onSelect={(data) => alert(data)} />
-          <Input label="Lahan" value={Form.lahann}
-            onChangeText={(value) => onInputChange(value, 'lahann')} />
-          <Input label="Kelompok Tani" value={Form.kelompok_tani}
-            onChangeText={(value) => onInputChange(value, 'kelompok_tani')} />
+          <SelectTwo name="Lahan" data={dtLahan} valueChange={(value) => onInputChange(value, 'lahann')} />
+          <SelectTwo name="Kelompok Tani" data={dtPoktan} valueChange={(value) => onInputChange(value, 'kelompok_tani')} />
           <InputDate label="Tanggal Tanam"
             value={Form.tgl_tanam}
             setValue={(value) => onInputChange(value, 'tgl_tanam')} />
