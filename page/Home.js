@@ -87,7 +87,6 @@ export default function home({ route, navigation }) {
         <Text style={styles.emptyText}>Data Kosong</Text>
       </View>
     );
-
   }
   return (
     <View style={{ backgroundColor: '#ecf0f1', height: '100%' }}>

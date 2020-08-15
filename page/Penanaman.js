@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, ToastAndroid, Image } from 'react-native';
 import { TopBar, Loading, IconBtn } from '../component';
-import { Input, Button, Select, InputDate } from '../component/atoms';
+import { Input, Button, Select, InputDate, SelectTwo } from '../component/atoms';
 import axios from 'axios';
-//import querystring from 'querystring'
+
 import ImagePicker from 'react-native-image-picker';
 import { color } from '../utils';
 
@@ -29,6 +29,11 @@ export default function Penanaman({ navigation }) {
       fileName: ''
     },
   });
+  const mockData = [
+    { id: 1, name: "React Native Developer", checked: true }, // set default checked for render option item
+    { id: 2, name: "Android Developer" },
+    { id: 3, name: "iOS Developer" }
+  ]
   const [modal, setModal] = useState({
     visible: false
   });
@@ -137,6 +142,7 @@ export default function Penanaman({ navigation }) {
         contentInsetAdjustmentBehavior="automatic"
         showsVerticalScrollIndicator={false}>
         <View style={styles.main}>
+          <SelectTwo name="Lahan" data={mockData} onSelect={(data) => alert(data)} />
           <Input label="Lahan" value={Form.lahann}
             onChangeText={(value) => onInputChange(value, 'lahann')} />
           <Input label="Kelompok Tani" value={Form.kelompok_tani}
