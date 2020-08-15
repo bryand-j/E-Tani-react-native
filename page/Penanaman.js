@@ -94,7 +94,6 @@ export default function Penanaman({ navigation }) {
         console.log('User tapped custom button: ', response.customButton);
       }
       else {
-        console.log(response.fileName);
         setForm({
           ...Form,
           foto: {
@@ -177,7 +176,7 @@ export default function Penanaman({ navigation }) {
             onChangeText={(value) => onInputChange(value, 'jenis_tanaman')} />
           <Input label="Nama Tanamaman" value={Form.nama_tanaman}
             onChangeText={(value) => onInputChange(value, 'nama_tanaman')} />
-          <Input label="Jumlah Tanam" value={Form.jumlah}
+          <Input label="Jumlah Tanam" value={Form.jumlah} keyboardType="decimal-pad"
             onChangeText={(value) => onInputChange(value, 'jumlah')} />
           <Input label="Status Penanaman" value={Form.status_penanaman}
             onChangeText={(value) => onInputChange(value, 'status_penanaman')} />
@@ -189,7 +188,7 @@ export default function Penanaman({ navigation }) {
             onChangeText={(value) => onInputChange(value, 'realisasi_kebutuhan')} />
           <Input label="Ralisasi Panen" value={Form.realisasi_panen}
             onChangeText={(value) => onInputChange(value, 'realisasi_panen')} />
-          <Input label="Jumlah Panen" value={Form.jumlah_panen}
+          <Input label="Jumlah Panen" value={Form.jumlah_panen} keyboardType="decimal-pad"
             onChangeText={(value) => onInputChange(value, 'jumlah_panen')} />
           <View style={styles.upload}>
             {(Form.foto.srcImg != '') && (
@@ -233,7 +232,7 @@ const styles = StyleSheet.create({
   },
   btnUpload: {
     position: "absolute",
-    left: '43%',
+    left: '42%',
     top: 25
 
   }

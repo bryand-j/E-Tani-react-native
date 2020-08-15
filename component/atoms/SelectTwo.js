@@ -19,7 +19,7 @@ export default function SelectTwo({ name, data, valueChange }) {
                 selectButtonText="Pilih"
                 listEmptyTitle="Tidak Ada Hasil"
                 searchPlaceHolderText="Cari"
-                onSelect={(data) => valueChange(data)} />
+                onSelect={(data) => valueChange(data[0])} />
         </View>
     )
 }
