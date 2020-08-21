@@ -15,6 +15,8 @@ import { color } from '../utils';
 import { Card, IconBtn } from '../component';
 import { FlatList } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
+
+import Geolocation from '@react-native-community/geolocation'
 import Axios from 'axios';
 
 const wait = (timeout) => {
@@ -69,6 +71,7 @@ export default function home({ route, navigation }) {
   };
 
   useEffect(() => {
+    Geolocation.getCurrentPosition((info) => console.log('lat :' + info.coords.latitude + ' long:' + info.coords.longitude));
     getData();
     AsyncStorage.getItem('userData', (error, result) => {
       if (result) {

@@ -4,6 +4,8 @@ import { TopBar, Loading, IconBtn } from '../component';
 import { Input, Button, Select, InputDate, SelectTwo } from '../component/atoms';
 import axios from 'axios';
 
+import Geolocation from '@react-native-community/geolocation';
+
 import ImagePicker from 'react-native-image-picker';
 import { color } from '../utils';
 
@@ -11,8 +13,16 @@ export default function Penanaman({ navigation }) {
   useEffect(() => {
     getApi('lahan', (data) => setDtLahan(data));
     getApi('poktan', (data) => setDtPoktan(data));
+    Geolocation.getCurrentPosition((info) => {
+      setForm({
+        ...Form,
+        ['lokasi']: '' + info.coords.latitude + ',' + info.coords.longitude,
+
+      });
+    });
   }, [])
   const [Form, setForm] = useState({
+    lokasi: '',
     lahann: '',
     kelompok_tani: '',
     tgl_tanam: '2020-8-10',
@@ -112,6 +122,7 @@ export default function Penanaman({ navigation }) {
     const url = "http://192.168.137.1:80/rest-server/api/penanaman";
     let data = new FormData();
     data.append('lahan', Form.lahann);
+    data.append('lokasi', Form.lokasi);
     data.append('kelompok_tani', Form.kelompok_tani);
     data.append('tgl_tanam', Form.tgl_tanam);
     data.append('perkiraan_panen', Form.perkiraan_panen);
