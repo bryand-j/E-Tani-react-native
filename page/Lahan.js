@@ -33,7 +33,7 @@ export default function Lahan({ navigation }) {
     const clickHanddelSimpan = () => {
         setModalVisible(true);
         axios
-            .post('http://192.168.137.1:80/rest-server/api/input/lahan', Form)
+            .post('http://192.168.137.1:80/rest-server/api/lahan', Form)
             .then((res) => {
                 console.log(res.data);
                 setModalVisible(false);
@@ -59,7 +59,7 @@ export default function Lahan({ navigation }) {
                 <View style={styles.main}>
                     <Input label="Nama Pemilik Lahan" value={Form.nama}
                         onChangeText={(value) => onInputChange(value, 'nama')} />
-                    <Input label="Luas" value={Form.luas}
+                    <Input label="Luas" value={Form.luas} keyboardType="decimal-pad"
                         onChangeText={(value) => onInputChange(value, 'luas')} />
 
                     <Button title="Simpan Data" onClick={() => clickHanddelSimpan()} />

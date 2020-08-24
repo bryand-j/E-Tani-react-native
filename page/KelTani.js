@@ -11,7 +11,7 @@ export default function KelTani({ navigation }) {
   const [Form, setForm] = useState({
     nama: '',
     no_sk: '',
-    tgl_berdiri: new Date().toLocaleDateString(),
+    tgl_berdiri: '2020-8-10',
     jumlah: '',
     status: 'Aktif',
   });
@@ -35,7 +35,7 @@ export default function KelTani({ navigation }) {
   const clickHanddelSimpan = () => {
     setModalVisible(true);
     axios
-      .post('http://192.168.137.1:80/rest-server/api/input/penyuluh', Form)
+      .post('http://192.168.137.1:80/rest-server/api/poktan', Form)
       .then((res) => {
         console.log(res.data);
         setModalVisible(false);
@@ -64,7 +64,7 @@ export default function KelTani({ navigation }) {
             onChangeText={(value) => onInputChange(value, 'no_sk')} />
           <InputDate label="Tanggal Berdiri" value={Form.tgl_berdiri}
             setValue={(value) => onInputChange(value, 'tgl_berdiri')} />
-          <Input label="Jumlah Anggota" value={Form.jumlah}
+          <Input label="Jumlah Anggota" value={Form.jumlah} keyboardType="decimal-pad"
             onChangeText={(value) => onInputChange(value, 'jumlah')} />
           <Select label="Status" value={Form.status}
             onValueChange={(value) => onInputChange(value, 'status')} >

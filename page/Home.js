@@ -79,7 +79,10 @@ export default function home({ route, navigation }) {
         setNama(data.nama);
       }
     });
-  });
+    return () => {
+
+    }
+  }, [refreshing]);
 
   const EmptyData = () => {
 

@@ -13,7 +13,7 @@ export default function Penyuluh({ navigation }) {
     keterangan: '',
     golongan: '',
     tempat_lahir: '',
-    tgl_lahir: new Date().toLocaleDateString(),
+    tgl_lahir: '2020-8-10',
     agama: '',
     jenis_kelamin: '',
     status: 'Aktif',
@@ -40,7 +40,7 @@ export default function Penyuluh({ navigation }) {
   const clickHanddelSimpan = () => {
     setModalVisible(true);
     axios
-      .post('http://192.168.137.1:80/rest-server/api/input/penyuluh', Form)
+      .post('http://192.168.137.1:80/rest-server/api/penyuluh', Form)
       .then((res) => {
         console.log(res.data);
         setModalVisible(false);
@@ -101,7 +101,7 @@ export default function Penyuluh({ navigation }) {
           </Select>
           <Input label="Alasan" value={Form.alasan}
             onChangeText={(value) => onInputChange(value, 'alasan')} />
-          <Input label="Lainyna" value={Form.lainya}
+          <Input label="Lainnya" value={Form.lainya}
             onChangeText={(value) => onInputChange(value, 'lainya')} />
           <Button title="Simpan Data" onClick={() => clickHanddelSimpan()} />
         </View>
