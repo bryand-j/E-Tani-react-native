@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   RefreshControl,
   ToastAndroid,
-  VirtualizedList,
   SafeAreaView
 } from 'react-native';
 import { color } from '../utils';
@@ -47,7 +46,7 @@ export default function home({ route, navigation }) {
       Nama={item.nama_pemilik}
       Tanaman={item.nama_tanaman}
       Tanggal={item.tgl_tanam}
-      Foto={"http://192.168.137.1/rest-server/assets/img/" + item.foto}
+      Foto={"http://192.168.137.1/rest-server/assets/doc/" + item.foto}
     />
   );
 
